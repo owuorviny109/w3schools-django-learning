@@ -1,22 +1,24 @@
 """
-URL configuration for my_tennis_club project.
+Project-level URL configuration for 'my_tennis_club'.
 
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+Purpose:
+- Route incoming HTTP requests across the entire Django project.
+- Delegate app-specific URL handling to the appropriate app.
+- Define root path and admin path.
 """
-from django.contrib import admin
-from django.urls import path
 
+# Import Django admin site functionality
+from django.contrib import admin
+
+# Import path() to define URL patterns and include() to include app URLs
+from django.urls import path, include
+
+# Import the 'members' view from the 'members' app to serve the homepage
+from members.views import members
+
+# Define the URL patterns for the project
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('', members),                       # Root URL '/' → members view (homepage)
+    path('members/', include('members.urls')),  # '/members/' → delegated to members app URLs
+    path('admin/', admin.site.urls),         # '/admin/' → Django admin interface
 ]
