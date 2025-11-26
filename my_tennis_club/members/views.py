@@ -4,23 +4,29 @@ Views for the 'members' app.
 Purpose:
 - Handle HTTP requests and return HTTP responses.
 - Serve as the controller layer between models/templates and the user.
+- Demonstrates rendering HTML templates instead of returning raw text.
 """
 
-from django.shortcuts import render          # Shortcut for rendering templates
-from django.http import HttpResponse         # To return raw HTTP responses
+# Import HttpResponse to send an HTTP response to the browser
+from django.http import HttpResponse
 
-# Basic view for members homepage
+# Import loader to load templates manually
+from django.template import loader
+
+# View function for members homepage
 def members(request):
     """
-    Purpose: Handle requests to the members homepage.
+    Purpose: Handle requests to the members homepage and render an HTML template.
 
     Function:
     - Accepts an HTTP request object.
-    - Returns a plain-text HTTP response.
-    - Can later be extended to render templates with dynamic data.
+    - Loads the 'myfirst.html' template from the templates directory.
+    - Renders the template and returns it as an HttpResponse.
+    - Can later include dynamic context data for template rendering.
     """
-    return HttpResponse(
-        "Hello from the members app! "
-        "All members are welcome here. "
-        "It is my tennis club. Enjoy your stay!"
-    )
+    
+    # Load the template file 'myfirst.html' from the templates directory
+    template = loader.get_template('myfirst.html')
+    
+    # Render the template (currently no context dictionary passed) and return as HTTP response
+    return HttpResponse(template.render())
